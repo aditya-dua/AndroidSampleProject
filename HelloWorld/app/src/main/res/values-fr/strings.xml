@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FRHello</string>
+    <string name="username">UserFRName</string>
+    <string name="password">Password</string>
+    <string name="usernameenter">Enter UserName</string>
+    <string name="passwordenter">Enter Password</string>
+    <string name="signInText">Sign IN</string>
+
+</resources>

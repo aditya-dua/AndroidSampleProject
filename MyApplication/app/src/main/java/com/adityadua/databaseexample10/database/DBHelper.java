@@ -1,10 +1,16 @@
 package com.adityadua.databaseexample10.database;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.adityadua.databaseexample10.model.BookData;
 import com.adityadua.databaseexample10.utils.Constants;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by AdityaDua on 24/07/17.
@@ -73,6 +79,84 @@ public class DBHelper {
     // 1. you will check if db is open or not ::dbOpenCheck()
     // 2. true => dbhelp.getInstance();
     // 3. false =>
+    // 10 coulmns in db & you want to insert in 5 columns
+    // String [] coulmn={"1","2"};
+    public long insertContentVals(String tabName, ContentValues content){
+
+        long id=0;
+
+        try{
+            db.beginTransaction();
+            id=db.insert(tabName,null,content);
+            db.setTransactionSuccessful();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            db.endTransaction();
+        }
+        return id;
+    }
+
+    // select studentName,studentclass from Student where studentid=1;
+
+    // 10 rows of student
+    // 1 Adi 10 => cursor
+    // 2 ABC 12
+    // 3 DEF 10
+    // 4 RTY 9
+    // MainActivity
+    public Cursor getTableRecords(String tableName,String [] coulmn,String where,String orderBy){
+        Cursor cursor = db.query(false,tableName,coulmn,where,null,null,null,orderBy,null);
+        //cursor.moveToFirst();
+
+      //  while(cursor.moveToNext()) {
+       //     cursor.getString(1);
+        //    cursor.getInt(0);
+        //    cursor.getString(2);
+       // }
+        return  cursor;
+    }
+
+    public int getFullCount(String table,String where){
+        Cursor cursor = db.query(false,table,null,where,null,null,null,null,null);
+
+        int no =0;
+        try{
+            if(cursor !=null){
+
+                cursor.moveToFirst();
+                no=cursor.getCount();
+                cursor.close();
+            }
+        }finally {
+            cursor.close();
+        }
+
+        return no;
+    }
+
+    public List<BookData> getAllBooks(){
+        List<BookData> books= new LinkedList<BookData>();
+
+
+        String query = "select * from "+Constants.BOOK_RECORD;
+
+        Cursor cursor = db.rawQuery(query,null);
+
+        BookData book =null;
+        if(cursor.moveToFirst()){
+            do{
+                book= new BookData();
+                book.setId((cursor.getString(0)).toString());
+                book.setBookId(cursor.getString(1));
+                book.setBookName(cursor.getString(2));
+                book.setAuthorName(cursor.getString(3));
+                books.add(book);
+
+            }while (cursor.moveToNext());
+        }
+        return  books;
+    }
 
 
 }

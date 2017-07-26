@@ -134,6 +134,54 @@ public class DBHelper {
 
         return no;
     }
+//authorName of Bookid =1
+
+    public String getValue(String table,String column,String where){
+
+        Cursor result = db.query(false,table,new String[]{column},where,null,null,null,null,null);
+
+        String value="";
+
+        try{
+            if(result.moveToFirst()){
+                value= result.getString(0);
+            }else{
+                return null;
+            }
+        }finally {
+            result.close();
+        }
+        return value;
+    }
+
+    // deletion ::
+
+    public void deleteRecords(String table,String whereclause,String[] whereArgs){
+        try{
+            db.beginTransaction();
+            db.delete(table,whereclause,whereArgs);
+            db.setTransactionSuccessful();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            db.endTransaction();
+        }
+    }
+
+    // Update the Table ::
+
+    public int updateRecord(String table,ContentValues values,String whereClause,String [] whereArgs){
+        int updatedRows=0;
+        try{
+            db.beginTransaction();
+            updatedRows=db.update(table,values,whereClause,whereArgs);
+            db.setTransactionSuccessful();
+        }finally {
+            db.endTransaction();
+        }
+
+        return  updatedRows;
+    }
 
     public List<BookData> getAllBooks(){
         List<BookData> books= new LinkedList<BookData>();

@@ -22,5 +22,6 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
 
         assertEquals("com.acadgild.android.helloworld", appContext.getPackageName());
+        //assertEquals(1,appContext.getColor());
     }
 }

@@ -1,5 +1,6 @@
 package com.acadgild.android.animation5demo;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,16 +35,18 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
         animFadeOut=AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fadeout);
         Log.i("Fade out Animation",animFadeOut.toString());
 
+        animFadeIn.setAnimationListener(this);
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 txtMessage.setVisibility(View.VISIBLE);
                 Log.i("onClick()","Text View is VISIBLE");
+                txtMessage.setTextColor(Color.YELLOW);
                 txtMessage.startAnimation(animFadeIn);
                 }
         });
 
-        animFadeIn.setAnimationListener(this);
+
     }
 
     @Override
@@ -55,11 +58,12 @@ public class MainActivity extends AppCompatActivity implements Animation.Animati
     @Override
     public void onAnimationEnd(Animation animation) {
         Toast.makeText(getApplicationContext(),"Animiation Ended",Toast.LENGTH_LONG).show();
+        txtMessage.setTextColor(Color.BLUE);
         Log.i("onAnimationEnd","Execution Ended");
-        if(animation==animFadeIn) {
+       /* if(animation==animFadeIn) {
             txtMessage.startAnimation(animFadeOut);
             animFadeOut.start();
-        }
+        }*/
     }
 
     @Override

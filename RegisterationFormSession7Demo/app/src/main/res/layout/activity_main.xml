@@ -134,4 +134,16 @@
         android:textColor="@color/colorPrimary"
         />
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:ems="10"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/course_txt"
+        android:layout_toEndOf="@+id/course_txt"
+        android:id="@+id/editText"
+        android:visibility="invisible" />
+
 </RelativeLayout>

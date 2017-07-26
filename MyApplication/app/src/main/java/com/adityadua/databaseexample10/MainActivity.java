@@ -1,8 +1,11 @@
 package com.adityadua.databaseexample10;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -14,7 +17,7 @@ import com.adityadua.databaseexample10.utils.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
     List<BookData> dataList;
     DBHelper dbHelper;
@@ -50,9 +53,11 @@ public class MainActivity extends AppCompatActivity {
             insertBookRecord();
         }
 
+        list.setOnItemClickListener(this);
         dataList = dbHelper.getAllBooks();
 
         List<String> listTitle=new ArrayList<String>();
+
 
         for(int i=0;i<dataList.size();i++){
             listTitle.add(i,dataList.get(i).getBookName());
@@ -71,5 +76,28 @@ public class MainActivity extends AppCompatActivity {
 
             dbHelper.insertContentVals(Constants.BOOK_RECORD,cv);
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        Intent i = new Intent(this,BookDetail.class);
+        i.putExtra(Constants.BOOK_ID,ids[position]);
+        startActivityForResult(i,100);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        dataList = dbHelper.getAllBooks();
+        List<String> listTitle=new ArrayList<String>();
+
+        for(int i=0;i<dataList.size();i++){
+            listTitle.add(i,dataList.get(i).getBookName());
+        }
+        myAdaptor = new ArrayAdapter<String>(this,R.layout.row_layout,R.id.listText,listTitle);
+        list.setOnItemClickListener(this);
+        list.setAdapter(myAdaptor);
     }
 }

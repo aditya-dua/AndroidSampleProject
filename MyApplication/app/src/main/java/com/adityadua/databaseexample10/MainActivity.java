@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         Intent i = new Intent(this,BookDetail.class);
         i.putExtra(Constants.BOOK_ID,ids[position]);
+
         startActivityForResult(i,100);
     }
 

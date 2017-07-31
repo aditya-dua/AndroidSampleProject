@@ -81,6 +81,15 @@ public class DBHelper {
     // 3. false =>
     // 10 coulmns in db & you want to insert in 5 columns
     // String [] coulmn={"1","2"};
+    // insert into Tablea ('name','class') values('Aditya','10');
+
+    // insert into studnet ('id','name') values (1,'ABC');
+    // ContentValues => Key & Value Pair
+    // Key => id Value => 1
+    // cv.put("id",1);
+    // cv.put("name","ABC");
+    // insert : cv & table
+    // insert into table ('id','name') values (1,'ABC');
     public long insertContentVals(String tabName, ContentValues content){
 
         long id=0;
@@ -155,7 +164,7 @@ public class DBHelper {
     }
 
     // deletion ::
-
+// delete tablea where studentid=1;
     public void deleteRecords(String table,String whereclause,String[] whereArgs){
         try{
             db.beginTransaction();
@@ -186,7 +195,7 @@ public class DBHelper {
     public List<BookData> getAllBooks(){
         List<BookData> books= new LinkedList<BookData>();
 
-
+/// select * from Books;
         String query = "select * from "+Constants.BOOK_RECORD;
 
         Cursor cursor = db.rawQuery(query,null);
@@ -195,6 +204,7 @@ public class DBHelper {
         if(cursor.moveToFirst()){
             do{
                 book= new BookData();
+               // int boodid_row_no=cursor.getColumnIndex("BookId");
                 book.setId((cursor.getString(0)).toString());
                 book.setBookId(cursor.getString(1));
                 book.setBookName(cursor.getString(2));

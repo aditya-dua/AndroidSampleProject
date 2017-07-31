@@ -29,6 +29,13 @@ public class TablesClass extends SQLiteOpenHelper {
                 Constants.BOOK_NAME+" TEXT,"+
                 Constants.BOOK_AUTHOR+" TEXT);";
 
+        String create_table_new ="CREATE TABLE "+ Constants.BOOK_RECORD+" ("+
+                Constants.ID +" INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                Constants.BOOK_ID+" TEXT,"+
+                Constants.BOOK_NAME+" TEXT," +
+                "BookPrice INTEGER,"+
+                Constants.BOOK_AUTHOR+" TEXT);";
+
         db.execSQL(create_table);
     }
 
